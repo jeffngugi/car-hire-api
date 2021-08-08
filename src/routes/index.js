@@ -1,12 +1,13 @@
-const e = require('express')
-const express = require('express')
+import express from 'express'
+import adminRoute from './admin'
+import ownerRoute from './owner'
+import customerRoute from './customer'
 
-const router = express.Router()
+const app = express()
 
-module.exports = ()=>{
-    router.get('/', (req,res)=>{
-        res.send('Home page')
-    })
+app.use('/admin', adminRoute)
+app.use('/owner', ownerRoute)
+app.use('/customer', customerRoute)
 
-    return router;
-}
+
+export default app

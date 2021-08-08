@@ -1,11 +1,12 @@
-const express = require('express');
-const bodyParser = require('body-parser')
-const logger = require('morgan');
+import express from 'express'
+import logger from 'morgan'
+import routes from './src/routes'
 
 const app = express();
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 
 // For CORS errors
 app.use((req, res, next) => {
@@ -16,11 +17,14 @@ app.use((req, res, next) => {
   });
 
 // require our routes
-// require('./server/routes')(app);
+// route(app);
+const apiVersion = '/api/v1'
+
+app.use(apiVersion, routes);
 
   app.use("*", (req, res) =>
   res.status(200).send({
-    message: "Not found, try to add /api/v1 to access the api",
+    message: "Not found, try to add " +apiVersion + " to access the api",
   })
 );
 

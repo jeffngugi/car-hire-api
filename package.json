@@ -4,8 +4,7 @@
   "description": "A platform for a peer to peer car hiring services.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node index.js",
-    "start:dev": "nodemon server.js"
+    "start:dev": "nodemon --exec babel-node server.js"
   },
   "keywords": [],
   "author": "",
