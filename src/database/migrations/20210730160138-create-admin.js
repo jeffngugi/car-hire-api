@@ -8,13 +8,13 @@ export default {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      fullname: {
         type: Sequelize.STRING
+      },
+      email:{
+        type:Sequelize.STRING
       },
       contact: {
-        type: Sequelize.STRING
-      },
-      address: {
         type: Sequelize.STRING
       },
       username: {

@@ -13,9 +13,9 @@ export default (sequelize, DataTypes) => {
     }
   };
   Admin.init({
-    name: DataTypes.STRING,
+    fullname: DataTypes.STRING,
+    email:DataTypes.STRING,
     contact: DataTypes.STRING,
-    address: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING
   }, {
