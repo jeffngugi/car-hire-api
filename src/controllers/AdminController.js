@@ -1,9 +1,9 @@
-import model from '../models'
-import {Op} from 'sequelize'
 
-const {Admin} = model
+import AdminService from '../services/AdminService'
+import Bcrypt from '../utils/Bcrypt'
 
-
+const {hashPassword, checkPassword} = Bcrypt
+const {findAdminByProperty, createAdmin} = AdminService
 
 class AdminController{
 
@@ -17,14 +17,26 @@ class AdminController{
         try {
             // return res.status(200).json(req.body)
             const {fullname, email, contact, username, password} = req.body
-            const admin = await Admin.findOne({where: {email:email} });
+            const admin = await findAdminByProperty({email:email})
             if(admin){
                 return res.status(422).send({message:'admim with that email already exists'})
             }
+            const newAdmin = {
+                fullname,
+                email,
+                contact,
+                username,
+                password:hashPassword(password)
+            }
 
-            await Admin.create({ fullname, email, contact, username, password})
+            const createdAdmin = await createAdmin(newAdmin)
 
-            return res.status(201).send({message:'Admin succesfully created'})
+            return res.status(200).json(createdAdmin)
+            /**
+             * To do
+             * create a method to send email verification method
+             */
+            
         } catch (error) {
             console.log(error)
             return res.status(500).send({message:'something went wrong, please try again'})
@@ -36,9 +48,17 @@ class AdminController{
         return res.status(200).send({message:"get auth works"})
     }
 
-    static async login(){
+
+    static async login(req,res){
         try {
+            const admin = await findAdminByProperty({email:req.body.email})
+            if(!admin){
+                return res.status(404).send({message:'User not found'})
+            }
+            const verify = await checkPassword(req.body.password, admin.password)
+            if(!verify) return res.status(404).send({message:'wrong email/password'})
             
+
         } catch (err) {
             // console.log(error)
             return res.status(500).send({message:'something went wrong, please try again'})
