@@ -1,8 +1,8 @@
 
 import AdminService from '../services/AdminService'
-import Bcrypt from '../utils/Bcrypt'
+import AuthHelper from '../utils/AuthHelper'
 
-const {hashPassword, checkPassword} = Bcrypt
+const {hashPassword, checkPassword, generateToken} = AuthHelper
 const {findAdminByProperty, createAdmin} = AdminService
 
 class AdminController{
@@ -62,7 +62,15 @@ class AdminController{
             }
             const verify = await checkPassword(req.body.password, admin.password)
             if(!verify) return res.status(404).send({message:'wrong email/password'})
-            return res.status(200).send({msg:admin})
+            const payload = {
+                id:admin.id,
+                fullname:admin.fullname,
+                username:admin.username,
+                email:admin.email
+
+            }
+            const token = generateToken(payload)
+            return res.status(200).send(token)
             
 
         } catch (err) {
