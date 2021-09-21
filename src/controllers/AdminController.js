@@ -45,11 +45,16 @@ class AdminController{
 
 
     static async getAuth(req,res){
-        return res.status(200).send({message:"get auth works"})
+        try {
+            return res.status(200).send({message:"get auth works"})
+        } catch (err) {
+            return res.status(500).send({message:'something went wrong, please try again'})
+        }
     }
 
 
     static async login(req,res){
+        // return res.status(400).send({msg:'fgfgfg'})
         try {
             const admin = await findAdminByProperty({email:req.body.email})
             if(!admin){
@@ -57,6 +62,7 @@ class AdminController{
             }
             const verify = await checkPassword(req.body.password, admin.password)
             if(!verify) return res.status(404).send({message:'wrong email/password'})
+            return res.status(200).send({msg:admin})
             
 
         } catch (err) {
