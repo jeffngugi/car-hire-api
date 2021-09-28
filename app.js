@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize())
 require('dotenv').config()
+require('./src/config/passport')
 
 // For CORS errors
 app.use((req, res, next) => {

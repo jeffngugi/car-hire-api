@@ -15,9 +15,8 @@ export default class Auth{
 
    
     static generateToken(data) {
-      console.log(process.env.SECRET_KEY)
         return jwt.sign(
-          data, process.env.SECRET_KEY,
+          data, process.env.JWT_SECRET,
           { expiresIn: process.env.TOKEN_EXPIRE_TIME}
         );
       }
