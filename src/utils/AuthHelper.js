@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 
 const saltRounds = 10
 
+
 export default class Auth{
     static hashPassword(password){
         return bcrypt.hashSync(password, bcrypt.genSaltSync(saltRounds));
@@ -14,9 +15,10 @@ export default class Auth{
 
    
     static generateToken(data) {
+      console.log(process.env.SECRET_KEY)
         return jwt.sign(
-          data, 'secret',
-          { expiresIn:'1hr' }
+          data, process.env.SECRET_KEY,
+          { expiresIn: process.env.TOKEN_EXPIRE_TIME}
         );
       }
     

@@ -54,6 +54,7 @@ class AdminController{
 
 
     static async login(req,res){
+        console.log(process.env.SECRET_KEY)
         // return res.status(400).send({msg:'fgfgfg'})
         try {
             const admin = await findAdminByProperty({email:req.body.email})

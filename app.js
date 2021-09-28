@@ -1,12 +1,14 @@
 import express from 'express'
 import logger from 'morgan'
 import routes from './src/routes'
+import passport from 'passport'
 
 const app = express();
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(passport.initialize())
+require('dotenv').config()
 
 // For CORS errors
 app.use((req, res, next) => {
