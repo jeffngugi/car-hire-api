@@ -45,6 +45,7 @@ class AdminController{
 
 
     static async getAuth(req,res){
+        
         try {
             return res.status(200).send({message:"get auth works"})
         } catch (err) {
@@ -55,6 +56,7 @@ class AdminController{
 
     static async login(req,res){
         // return res.status(400).send({msg:'fgfgfg'})
+        // logger.error("Auditing UserController")
         try {
             const admin = await findAdminByProperty({email:req.body.email})
             if(!admin){
